@@ -125,14 +125,30 @@ function Index() {
 
     // 13 — Outfit grid (videos)
     <div className="w-full max-w-6xl">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-        {videos.map((v, i) => (
-          <div key={i} className="aspect-[9/16] overflow-hidden rounded-sm bg-black shadow-2xl">
-            <video src={v.url} className="w-full h-full object-cover" controls playsInline preload="metadata" muted />
-          </div>
-        ))}
+  <div
+    className="flex gap-3 overflow-x-auto snap-x snap-mandatory -mx-6 px-6 pb-2 [&::-webkit-scrollbar]:hidden md:mx-0 md:px-0 md:pb-0 md:grid md:grid-cols-4 md:gap-4 md:overflow-visible"
+    style={{ scrollbarWidth: "none" }}
+  >
+    {videos.map((v, i) => (
+      <div
+        key={i}
+        className="snap-center shrink-0 w-[72%] xs:w-[60%] sm:w-[42%] md:w-auto md:shrink aspect-[9/16] overflow-hidden rounded-md bg-black shadow-2xl"
+      >
+        <video
+          src={v.url}
+          className="w-full h-full object-cover"
+          controls
+          playsInline
+          preload="metadata"
+          muted
+        />
       </div>
-    </div>,
+    ))}
+  </div>
+  <p className="mt-3 text-center text-[10px] uppercase tracking-[0.3em] text-muted-foreground/50 md:hidden">
+    swipe to see more
+  </p>
+</div>,
 
     // 14
     <PhotoSlide src={couple[6].url} caption="My fav. blue kurti dress. one of the good days." />,
