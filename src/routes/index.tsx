@@ -19,6 +19,7 @@ import video4 from "@/assets/videos/video4.mp4.asset.json";
 import video5 from "@/assets/videos/video5.mp4.asset.json";
 import video6 from "@/assets/videos/video6.mp4.asset.json";
 import video7 from "@/assets/videos/video7.mp4.asset.json";
+import song from "@/assets/audio/song.mp3.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -125,13 +126,22 @@ function Index() {
 
     // 13 — Outfit grid (videos)
     <div className="w-full max-w-6xl">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+      <div
+        className="flex gap-3 overflow-x-auto snap-x snap-mandatory -mx-6 px-6 pb-2 [&::-webkit-scrollbar]:hidden md:mx-0 md:px-0 md:pb-0 md:grid md:grid-cols-4 md:gap-4 md:overflow-visible"
+        style={{ scrollbarWidth: "none" }}
+      >
         {videos.map((v, i) => (
-          <div key={i} className="aspect-[9/16] overflow-hidden rounded-sm bg-black shadow-2xl">
+          <div
+            key={i}
+            className="snap-center shrink-0 w-[58vw] sm:w-[42vw] md:w-auto md:shrink aspect-[9/16] overflow-hidden rounded-sm bg-black shadow-2xl"
+          >
             <video src={v.url} className="w-full h-full object-cover" controls playsInline preload="metadata" muted />
           </div>
         ))}
       </div>
+      <p className="mt-3 text-center text-[10px] uppercase tracking-[0.3em] text-muted-foreground/50 md:hidden">
+        swipe to see more
+      </p>
     </div>,
 
     // 14
@@ -173,6 +183,16 @@ function Index() {
 
   const next = useCallback(() => setI((x) => Math.min(x + 1, total - 1)), [total]);
   const prev = useCallback(() => setI((x) => Math.max(x - 1, 0)), []);
+
+  // background song
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [playing, setPlaying] = useState(false);
+  const toggleMusic = useCallback(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (audio.paused) audio.play().catch(() => {});
+    else audio.pause();
+  }, []);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -226,10 +246,32 @@ function Index() {
         <Slide key={idx} active={idx === i}>{node}</Slide>
       ))}
 
+      {/* Background song */}
+      <audio
+        ref={audioRef}
+        src={song.url}
+        loop
+        onPlay={() => setPlaying(true)}
+        onPause={() => setPlaying(false)}
+      />
+
       {/* Top bar */}
       <div className="absolute top-5 left-0 right-0 flex justify-between items-center px-6 z-10 text-xs uppercase tracking-[0.3em] text-muted-foreground">
         <span style={script} className="text-primary text-base normal-case tracking-normal">for you</span>
-        <span className="tabular-nums">{String(i + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}</span>
+        <div className="flex items-center gap-4">
+          <span className="tabular-nums">{String(i + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}</span>
+          <button
+            onClick={toggleMusic}
+            aria-label={playing ? "Pause song" : "Play song"}
+            className="w-7 h-7 rounded-full border border-border bg-background/60 backdrop-blur flex items-center justify-center text-foreground/70 hover:text-primary hover:border-primary transition-all"
+          >
+            {playing ? (
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="4" width="5" height="16" /><rect x="14" y="4" width="5" height="16" /></svg>
+            ) : (
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4l14 8-14 8V4z" /></svg>
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Progress bar */}
@@ -240,40 +282,42 @@ function Index() {
         />
       </div>
 
-      {/* Nav arrows */}
-      <button
-        onClick={prev}
-        disabled={i === 0}
-        aria-label="Previous"
-        className="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 md:w-12 md:h-12 rounded-full border border-border bg-background/60 backdrop-blur flex items-center justify-center text-foreground/70 hover:text-primary hover:border-primary disabled:opacity-20 disabled:cursor-not-allowed transition-all"
-      >
-        ‹
-      </button>
-      <button
-        onClick={next}
-        disabled={i === total - 1}
-        aria-label="Next"
-        className="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 md:w-12 md:h-12 rounded-full border border-border bg-background/60 backdrop-blur flex items-center justify-center text-foreground/70 hover:text-primary hover:border-primary disabled:opacity-20 disabled:cursor-not-allowed transition-all"
-      >
-        ›
-      </button>
+      {/* Bottom controls — prev / dots / next */}
+      <div className="absolute bottom-6 left-0 right-0 z-20 flex items-center justify-center gap-3 md:gap-5 px-4">
+        <button
+          onClick={prev}
+          disabled={i === 0}
+          aria-label="Previous"
+          className="shrink-0 w-11 h-11 md:w-12 md:h-12 rounded-full border border-border bg-background/60 backdrop-blur flex items-center justify-center text-foreground/70 hover:text-primary hover:border-primary disabled:opacity-20 disabled:cursor-not-allowed transition-all"
+        >
+          ‹
+        </button>
 
-      {/* Dot indicators */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex gap-1.5 max-w-[90vw] flex-wrap justify-center">
-        {slides.map((_, idx) => (
-          <button
-            key={idx}
-            onClick={() => setI(idx)}
-            aria-label={`Slide ${idx + 1}`}
-            className={`h-1.5 rounded-full transition-all duration-500 ${
-              idx === i ? "w-8 bg-primary" : "w-1.5 bg-foreground/25 hover:bg-foreground/50"
-            }`}
-          />
-        ))}
+        <div className="flex gap-1.5 max-w-[44vw] md:max-w-[50vw] flex-wrap justify-center">
+          {slides.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setI(idx)}
+              aria-label={`Slide ${idx + 1}`}
+              className={`h-1.5 rounded-full transition-all duration-500 ${
+                idx === i ? "w-8 bg-primary" : "w-1.5 bg-foreground/25 hover:bg-foreground/50"
+              }`}
+            />
+          ))}
+        </div>
+
+        <button
+          onClick={next}
+          disabled={i === total - 1}
+          aria-label="Next"
+          className="shrink-0 w-11 h-11 md:w-12 md:h-12 rounded-full border border-border bg-background/60 backdrop-blur flex items-center justify-center text-foreground/70 hover:text-primary hover:border-primary disabled:opacity-20 disabled:cursor-not-allowed transition-all"
+        >
+          ›
+        </button>
       </div>
 
       {/* Hint */}
-      <p className="absolute bottom-14 left-1/2 -translate-x-1/2 z-10 text-[10px] uppercase tracking-[0.3em] text-muted-foreground/60 hidden md:block">
+      <p className="absolute bottom-[4.75rem] left-1/2 -translate-x-1/2 z-10 text-[10px] uppercase tracking-[0.3em] text-muted-foreground/60 hidden md:block">
         use ← → or swipe
       </p>
     </div>
