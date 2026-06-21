@@ -9,6 +9,16 @@ import photo6 from "@/assets/photos/photo6.jpeg.asset.json";
 import photo7 from "@/assets/photos/photo7.jpeg.asset.json";
 import photo8 from "@/assets/photos/photo8.jpeg.asset.json";
 import photo9 from "@/assets/photos/photo9.jpeg.asset.json";
+import photo10 from "@/assets/photos/photo10.jpeg.asset.json";
+import photo11 from "@/assets/photos/photo11.jpeg.asset.json";
+import photo12 from "@/assets/photos/photo12.jpeg.asset.json";
+import video1 from "@/assets/videos/video1.mp4.asset.json";
+import video2 from "@/assets/videos/video2.mp4.asset.json";
+import video3 from "@/assets/videos/video3.mp4.asset.json";
+import video4 from "@/assets/videos/video4.mp4.asset.json";
+import video5 from "@/assets/videos/video5.mp4.asset.json";
+import video6 from "@/assets/videos/video6.mp4.asset.json";
+import video7 from "@/assets/videos/video7.mp4.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -34,8 +44,9 @@ function Index() {
     return () => clearInterval(id);
   }, []);
 
-  const couple = [photo1, photo2, photo3, photo4, photo6, photo7];
+  const couple = [photo1, photo2, photo3, photo4, photo6, photo7, photo10, photo12];
   const her = [photo5, photo8, photo9];
+  const videos = [video1, video2, video3, video4, video5, video6, video7];
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden" style={{ fontFamily: "var(--font-body)" }}>
@@ -106,11 +117,38 @@ function Index() {
           <h2 style={{ fontFamily: "var(--font-display)" }} className="text-5xl md:text-6xl italic">the most beautiful person I know</h2>
         </div>
         <div className="grid md:grid-cols-3 gap-6">
-          {her.map((p, i) => (
+          {[...her, photo11].map((p, i) => (
             <div key={i} className="aspect-[3/4] overflow-hidden rounded-sm shadow-xl group">
               <img src={p.url} alt="her" loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* OUTFIT CHECKS */}
+      <section className="py-28 px-6 bg-secondary/30">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <p className="uppercase tracking-[0.3em] text-xs text-muted-foreground mb-3">our little ritual</p>
+            <h2 style={{ fontFamily: "var(--font-display)" }} className="text-5xl md:text-6xl italic">outfit checks</h2>
+            <p className="mt-6 text-muted-foreground max-w-xl mx-auto italic" style={{ fontFamily: "var(--font-display)" }}>
+              You sent these to me before stepping out. I still watch them. You're impossibly beautiful in every single one.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {videos.map((v, i) => (
+              <div key={i} className="aspect-[9/16] overflow-hidden rounded-sm bg-black shadow-xl group">
+                <video
+                  src={v.url}
+                  className="w-full h-full object-cover"
+                  controls
+                  playsInline
+                  preload="metadata"
+                  muted
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
