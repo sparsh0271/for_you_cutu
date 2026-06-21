@@ -74,7 +74,7 @@ function Index() {
     </div>,
 
     // 2 — First photo
-    <PhotoSlide src={couple[0].url} caption="us — before the distance had a name" />,
+    <PhotoSlide src={couple[0].url} caption="us - before the distance had a name" />,
 
     // 3
     <PhotoSlide src={couple[1].url} caption="that night, the gold-lit mirrors, your laugh" />,
