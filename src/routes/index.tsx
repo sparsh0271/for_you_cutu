@@ -23,9 +23,9 @@ import video7 from "@/assets/videos/video7.mp4.asset.json";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "For You — Even After a Month" },
+      { title: "For You - Even After a Month" },
       { name: "description", content: "A letter, in pictures and words, for the one I still love." },
-      { property: "og:title", content: "For You — Even After a Month" },
+      { property: "og:title", content: "For You - Even After a Month" },
       { property: "og:description", content: "A letter, in pictures and words, for the one I still love." },
     ],
   }),
@@ -62,7 +62,7 @@ function Index() {
         <span style={script} className="not-italic text-primary">I still choose you.</span>
       </h1>
       <p className="mt-10 text-muted-foreground text-base md:text-lg max-w-xl mx-auto animate-fade-in">
-        A quiet little story — for the most beautiful person I know.
+        A quiet little story - for the most beautiful person I know.
       </p>
     </div>,
 
@@ -94,22 +94,22 @@ function Index() {
     // 6 — Letter pt 2
     <div className="max-w-2xl">
       <div style={display} className="text-xl md:text-3xl italic leading-relaxed space-y-6 text-foreground/90">
-        <p>You said distance would break us. Maybe you were right about the silence — but you were wrong about my heart.</p>
+        <p>You said distance would break us. Maybe you were right about the silence - but you were wrong about my heart.</p>
         <p>It is exactly where you left it.</p>
       </div>
     </div>,
 
     // 7
-    <PhotoSlide src={couple[3].url} caption="the way you looked at me, always" />,
+    <PhotoSlide src={couple[3].url} caption="the way you put up yor gloss, sadly mai taste nhi kr paaya" />,
 
     // 8 — Her
     <PhotoSlide src={her[0].url} caption="you, on a slow afternoon. perfect." tall />,
 
     // 9
-    <PhotoSlide src={her[1].url} caption="the green tee, the soft light, my whole world" tall />,
+    <PhotoSlide src={her[1].url} caption="the soft light, my whole world" tall />,
 
     // 10
-    <PhotoSlide src={her[2].url} caption="this one lives on my lockscreen still" tall />,
+    <PhotoSlide src={her[2].url} caption="this is where you look effortlessly beautiful" tall />,
 
     // 11
     <PhotoSlide src={her[3].url} caption="impossibly beautiful. impossibly mine — once." tall />,
@@ -135,7 +135,7 @@ function Index() {
     </div>,
 
     // 14
-    <PhotoSlide src={couple[6].url} caption="pink wall. blue dress. one of the good days." />,
+    <PhotoSlide src={couple[6].url} caption="My fav. blue kurti dress. one of the good days." />,
 
     // 15
     <PhotoSlide src={couple[7].url} caption="even through a video call, you felt close" />,
@@ -146,7 +146,7 @@ function Index() {
       <div className="space-y-6 md:space-y-8">
         {[
           "Distance is a number. What we had isn't measurable.",
-          "I'd wait. Not because I have to — because nothing else feels right.",
+          "I'd wait. Not because I have to - because nothing else feels right.",
           "Every song reminds me of you. I've stopped fighting it.",
           "You don't owe me an answer. I just owed you the truth.",
         ].map((t, i) => (
@@ -163,7 +163,7 @@ function Index() {
       <p style={script} className="text-6xl md:text-8xl text-primary mb-6">i love you</p>
       <p className="text-muted-foreground text-xs md:text-sm uppercase tracking-[0.4em]">today · tomorrow · always</p>
       <p style={display} className="mt-12 italic text-muted-foreground text-base md:text-lg max-w-md mx-auto">
-        — still yours.
+        - still yours.
       </p>
     </div>,
   ];
