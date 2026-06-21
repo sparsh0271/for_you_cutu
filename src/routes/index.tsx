@@ -127,12 +127,17 @@ function Index() {
     <div className="w-full max-w-6xl">
   <div
     className="flex gap-3 overflow-x-auto snap-x snap-mandatory -mx-6 px-6 pb-2 [&::-webkit-scrollbar]:hidden md:mx-0 md:px-0 md:pb-0 md:grid md:grid-cols-4 md:gap-4 md:overflow-visible"
-    style={{ scrollbarWidth: "none" }}
+    style={{
+      scrollbarWidth: "none",
+      WebkitOverflowScrolling: "touch",
+      overscrollBehaviorX: "contain",
+      touchAction: "pan-x",
+    }}
   >
     {videos.map((v, i) => (
       <div
         key={i}
-        className="snap-center shrink-0 w-[72%] xs:w-[60%] sm:w-[42%] md:w-auto md:shrink aspect-[9/16] overflow-hidden rounded-md bg-black shadow-2xl"
+        className="snap-center shrink-0 w-[clamp(220px,72vw,300px)] md:w-auto md:shrink aspect-[9/16] overflow-hidden rounded-md bg-black shadow-2xl"
       >
         <video
           src={v.url}
